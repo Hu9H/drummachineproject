@@ -1,14 +1,15 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useCallback } from "react"
 import audioClips from "./audioClips"
+
 
 
 const DrumMachine = () => {
   
-  const [playingId, setPlayingId] = useState()
-  const audioClip = (audioId) => {
+  const [playingId, setPlayingId] = useState<string | null>(null)
+  const audioClip = useCallback((audioId : string) => {
     
     console.log(audioId)
-    const audioElement = document.getElementById(audioId)
+    const audioElement  = document.getElementById(audioId) as HTMLAudioElement
     console.log(audioElement)
     if (audioId === playingId){
       audioElement.currentTime = 0
@@ -22,9 +23,10 @@ const DrumMachine = () => {
    
    setPlayingId(audioId)
    console.log(playingId)
-  }
-  const currentAudio= (audioId) => {
-    const currentAudioId = document.getElementById("display")
+  },[playingId]
+);
+  const currentAudio= (audioId :string) => {
+    const currentAudioId = document.getElementById("display") as HTMLElement
     currentAudioId.textContent = audioClips[audioId][0].name
   }
   
@@ -35,27 +37,28 @@ const DrumMachine = () => {
   
   useEffect(()=> {
     const keys = ["Q","W","E","A", "S", "D", "Z", "X", "C"]
-    const handleKeyDown = (e)=> {
+    const handleKeyDown = (e : React.KeyboardEvent)=> {
       keys.forEach((letter)=> {
          if (e.key.toUpperCase() === letter){
           audioClip(letter)
+          currentAudio(letter)
         }
 
       })
     }
-      document.addEventListener("keydown", handleKeyDown)
+      document.addEventListener("keydown", handleKeyDown as unknown as EventListener)
       return () => {
-        document.removeEventListener("keydown", handleKeyDown);
+        document.removeEventListener("keydown", handleKeyDown as unknown as EventListener);
       };
     
     
-  },[])
+  },[audioClip])
   
 
   
   return (
-    <div id="drum-machine">
-        <div >
+    <div id="drum-machine" className="drum-machine">
+        <div id="drumpads" className="drumpads">
             <button id="buttonQ" className="drum-pad"   onClick={() =>{audioClip("Q") ;currentAudio("Q");}}>Q<audio id="Q" className="clip" src={audioClips["Q"][0].audioUrl}  preload="auto"></audio></button>
             <button id="buttonW" className="drum-pad"   onClick={() =>{audioClip("W") ;currentAudio("W");}}>W<audio id="W" className="clip" src={audioClips["W"][0].audioUrl}  preload="auto"></audio></button>
             <button id="buttonE" className="drum-pad"   onClick={() =>{audioClip("E") ;currentAudio("E");}}>E<audio id="E" className="clip" src={audioClips["E"][0].audioUrl}  preload="auto"></audio></button>
