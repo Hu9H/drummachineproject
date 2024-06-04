@@ -1,15 +1,11 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import audioClips from "./audioClips";
 import useAudioPlayer from "./playAudioClip";
-
-//type RecordedClip = {
-  //audioId: string;
-  //timestamp: number;
-//};
+import useRecording from "./recording";
 
 const DrumMachine = () => {
-  //const [recording, setRecording] = useState<RecordedClip[]>([])
-  
+  const [isRecording, setIsRecording] = useState(false);
+  const {recordRecording, playRecording,clearRecording} = useRecording()
   const {playAudio} = useAudioPlayer();
   const keys = ["Q","W","E","A", "S", "D", "Z", "X", "C"];
   useEffect(()=> {
@@ -17,7 +13,9 @@ const DrumMachine = () => {
     const handleKeyDown = (e : React.KeyboardEvent)=> {
       const key = e.key.toUpperCase()
          if (keys.includes(key)){
-          playAudio(key);
+          if (isRecording) {
+            recordRecording(key);
+          }playAudio(key);
         }      
     };
       document.addEventListener("keydown", handleKeyDown as unknown as EventListener);
@@ -26,9 +24,11 @@ const DrumMachine = () => {
       };
     
     
-  },[playAudio]);
+  },[playAudio,isRecording,recordRecording]);
   
-
+  const toggleRecording = () => {
+    setIsRecording(prev => !prev);
+  };
   
   return (
     <div id="drum-machine" className="drum-machine">
@@ -38,7 +38,9 @@ const DrumMachine = () => {
               key={key}
               id={`button${key}`}
               className="drum-pad"
-              onClick={() =>{playAudio(key) ;}}
+              onClick={() =>{ if (isRecording) {
+                recordRecording(key);
+              } playAudio(key) ;}}
             >
               {key}
               <audio
@@ -50,6 +52,9 @@ const DrumMachine = () => {
             </button>
           ))}
          </div>
+      <button id="play-record" className="play-record" onClick={() => {playRecording()}}>Play</button>
+      <button id="record" className="record" onClick={() => {toggleRecording()}}>{isRecording ? "Stop Recording" : "Start Recording"}</button>
+      <button id="clear-record" className="clear-record" onClick={() => {clearRecording()}}>Clear Recording</button>
       <p  className="audioId" id="display"></p>
      </div>
   )

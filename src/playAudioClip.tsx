@@ -9,7 +9,7 @@ const useAudioPlayer = () => {
   
   const playAudio = useCallback((audioId : string) => {
     const audioElement  = document.getElementById(audioId) as HTMLAudioElement;
-
+    
     if (audioElement) {
       if (audioId === playingId) {
         audioElement.currentTime = 0;
@@ -21,7 +21,7 @@ const useAudioPlayer = () => {
       }
 
     setPlayingId(audioId);
-
+    
     
     const currentAudioId = document.getElementById("display") as HTMLElement;
     currentAudioId.textContent = audioClips[audioId][0].name;
