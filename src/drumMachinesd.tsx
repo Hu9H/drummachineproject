@@ -32,6 +32,7 @@ const DrumMachine = () => {
   
   return (
     <div id="drum-machine" className="drum-machine">
+      <h2 id="title" className="title">Drum Machine</h2>
         <div id="drumpads" className="drumpads">
           {keys.map((key) => (
             <button

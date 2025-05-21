@@ -1,36 +1,81 @@
+body {
+  background-color: antiquewhite;
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+}
+
 .App {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  align-content: center;
-   
-  width: 100%;
-  height: 100%;
-  
+  min-height: 100vh;
+  padding: 1rem;
+}
 
+.drum-machine {
+  background: linear-gradient(to bottom, coral 0%, #d3544c 90%);
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.drumpads {
+  display: grid;
+  grid-template-columns: repeat(3, 95px);
+  gap: 10px;
+  margin: 0.5rem auto;
+  justify-content: center;
+}
+
+
+.drum-pad {
+  width: 80px;
+  height: 80px;
+  font-size: 1.25rem;
+  font-weight: bold;
+  background-color: #00ced1;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px #008b8b;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  cursor: pointer;
+}
+
+.drum-pad:hover {
+  background-color: #20b2aa;
+}
+
+.drum-pad:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px #008b8b;
+}
+
+button {
+  margin: 0.5rem;
+  padding: 0.5rem 0.5rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: none;
+  background-color: #444;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+button:hover {
+  background-color: #666;
+}
+
+.audioId {
+  margin-top: 1rem;
+  font-size: 1.1rem;
 }
 
 .title {
-  text-align: center;
-}
-.drum-machine {
-  background-color:coral;
-  margin: 20px;
-  padding: 20px;
-  border-radius: 10px;
-}
-.drum-pad {
-  background-color: rgba(0, 255, 255, 0.932);
-  border-radius: 8px; 
-}
-.drumpads {
-  margin: auto;
-  background-color:coral
-}
-.audioId {
-  text-align: center;
-}
-body {
-  background-color: antiquewhite;
+  color: #444;
+  background-color: #00ced1;
+  border-radius: 20px;
 }
